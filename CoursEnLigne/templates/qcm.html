@@ -115,7 +115,7 @@
                 </div>
             </div>
             
-            <form method="post">
+            <form method="post" action="{% url 'qcm:soumettre_qcm' qcm.idQcm %}">
                 {% csrf_token %}
                 {% for question in questions %}
                     <div>

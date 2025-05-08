@@ -9,6 +9,7 @@ def afficher_qcm(request, qcm_id):
     qcm = get_object_or_404(Qcm, pk=qcm_id)
     questions = qcm.questions.prefetch_related('reponses')
 
+
     return render(request, 'qcm.html', {
         'qcm': qcm,
         'questions': questions,
@@ -22,7 +23,9 @@ def soumettre_qcm(request, qcm_id):
         score = 0
 
         for question in questions:
-            bonnes_reps = set(str(rep.idReponse) for rep in question.reponses.filter(natureRep=True))
+            bonnes_reps = set()
+            for rep in question.reponses.filter(natureRep=True):
+                bonnes_reps.add(str(rep.idReponse))
             reps_cochees = set(request.POST.getlist(f'question_{question.idQuestion}'))
             if bonnes_reps == reps_cochees:
                 score += 1
