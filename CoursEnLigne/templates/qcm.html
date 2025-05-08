@@ -115,34 +115,22 @@
                 </div>
             </div>
             
-            <div class="row course_boxes">
-                <div class="col-lg-12">  <!-- Utilisez toute la largeur pour le QCM -->
-                    <form method="post" action="{% url 'qcm:soumettre_qcm' qcm.idQcm %}">  <!-- Ajoutez l'URL de soumission -->
-                        {% csrf_token %}
-                        
-                        {% for question in questions %}
-                        <div class="card mb-3">  <!-- Carte pour chaque question -->
-                            <div class="card-body">
-                                <h5 class="card-title">Question {{ forloop.counter }}</h5>
-                                <p class="card-text">{{ question.rep }}</p>
-                                
-                                <!-- Cases à cocher pour les réponses -->
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" 
-                                           name="question_{{ question.idReponse }}" 
-                                           id="q{{ question.idReponse }}">
-                                    <label class="form-check-label" for="q{{ question.idReponse }}">
-                                        Cochez si cette réponse est correcte
-                                    </label>
-                                </div>
+            <form method="post">
+                {% csrf_token %}
+                {% for question in questions %}
+                    <div>
+                        <p><strong>{{ question.texte }}</strong></p>
+                        {% for reponse in question.reponses.all %}
+                            <div>
+                                <input type="checkbox" name="question_{{ question.idQuestion }}" value="{{ reponse.idReponse }}">
+                                {{ reponse.rep }}
                             </div>
-                        </div>
                         {% endfor %}
-                        
-                        <button type="submit" class="btn btn-primary">Soumettre le QCM</button>
-                    </form>
-                </div>
-            </div>
+                    </div>
+                {% endfor %}
+                <button type="submit">Soumettre</button>
+            </form>
+            
         </div>
 
     <!-- Footer -->

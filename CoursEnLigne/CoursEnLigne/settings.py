@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "cours",
     "lesson",
     "qcm",
+    "question",
     "reponse",
     "progres",
     "chatbot" 

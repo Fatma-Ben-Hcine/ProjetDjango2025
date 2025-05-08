@@ -120,7 +120,7 @@
                         <div class="card-body text-center">
                             <h3 class="card-title">Votre score</h3>
                             <h2 class="display-4"><strong>{{ score }}/{{ score_max }}</strong></h2>
-                            
+            
                             {% if reussi %}
                             <div class="alert alert-success mt-4">
                                 <h4>Félicitations!</h4>
@@ -132,7 +132,7 @@
                                 <p>Vous n'avez pas atteint le score minimum requis ({{ score_min }} bonnes réponses nécessaires).</p>
                             </div>
                             {% endif %}
-                            
+            
                             <div class="mt-5">
                                 <a href="{% url 'lessons:lessondet' lesson_id=lesson.idLesson %}" class="btn btn-primary mr-3">
                                     Retour à la leçon
@@ -145,6 +145,7 @@
                     </div>
                 </div>
             </div>
+            
         </div>
     </div>
 
