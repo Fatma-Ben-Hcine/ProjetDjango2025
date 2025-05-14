@@ -32,11 +32,8 @@
                 <div class="main_nav">
                     <ul class="main_nav_list">
                         <li class="main_nav_item"><a href="{% url 'index' %}">home</a></li>
-                        <li class="main_nav_item"><a href="#">about us</a></li>
-                        <li class="main_nav_item"><a href="#">courses</a></li>
-                        <li class="main_nav_item"><a href="#">elements</a></li>
-                        <li class="main_nav_item"><a href="#">news</a></li>
-                        <li class="main_nav_item"><a href="#">contact</a></li>
+                        <li class="main_nav_item"><a href="{% url 'cours:liste' %}">courses</a></li>
+                        <li class="main_nav_item"><a href="{% url 'chat' %}">Assistant</a></li>
                         <li  class="main_nav_item">  
                             {% if user.is_authenticated %} 
                             <a class="page-scroll" href="{% url 'logout' %}">Logout</a> 
@@ -120,6 +117,26 @@
                         <div class="card-body text-center">
                             <h3 class="card-title">Votre score</h3>
                             <h2 class="display-4"><strong>{{ score }}/5</strong></h2>
+                            <div class="mt-4">
+    <h4 class="mb-3">Votre progression</h4>
+    <div class="d-flex align-items-center">
+        <div class="progress flex-grow-1" style="height: 20px;">
+            <div class="progress-bar progress-bar-striped bg-info" 
+                 role="progressbar" 
+                 style="width: {% widthratio niveau 5 100 %}%" 
+                 aria-valuenow="{{ niveau }}" 
+                 aria-valuemin="0" 
+                 aria-valuemax="5">
+            </div>
+        </div>
+        <span class="badge badge-secondary ml-3" style="font-size: 1rem;">
+            Niveau {{ niveau }}/5
+        </span>
+    </div>
+    {% if niveau == 5 %}
+    <p class="text-success mt-2"><i class="fas fa-trophy"></i> Niveau maximum atteint !</p>
+    {% endif %}
+</div>
             
                             {% if reussi %}
                             <div class="alert alert-success mt-4">

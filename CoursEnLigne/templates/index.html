@@ -36,12 +36,9 @@
 			<nav class="main_nav_container">
 				<div class="main_nav">
 					<ul class="main_nav_list">
-						<li class="main_nav_item"><a href="#">home</a></li>
-						<li class="main_nav_item"><a href="#">about us</a></li>
+						<li class="main_nav_item"><a href="{% url 'index' %}">home</a></li>
 						<li class="main_nav_item"><a href="{% url 'cours:liste' %}">courses</a></li>
-						<li class="main_nav_item"><a href="elements.html">elements</a></li>
-						<li class="main_nav_item"><a href="news.html">news</a></li>
-						<li class="main_nav_item"><a href="contact.html">contact</a></li>
+                    	<li class="main_nav_item"><a href="{% url 'chat' %}">Assistant</a></li>
 						<li  class="main_nav_item">  
 							{% if user.is_authenticated %} 
 							<a class="page-scroll" href="{% url 'logout' %}">Logout</a> 
@@ -190,50 +187,7 @@
 		</div>
 	</div>
 
-	<!-- Popular -->
 
-	<div class="popular page_section">
-		<div class="container">
-			<div class="row">
-				<div class="col">
-					<div class="section_title text-center">
-						<h1>Popular Courses</h1>
-					</div>
-				</div>
-			</div>
-
-			<div class="row course_boxes">
-				
-				<!-- Popular Course Item -->
-				{% for cour in cours %}
-<div class="col-lg-4 course_box">
-    <div class="card">
-        
-        {% if cour.imageCours %}
-        <img class="card-img-top" src="{{ cour.imageCours}}" alt="{{ cour.titreCours }}">
-        {% endif %}
-        
-        <div class="card-body text-center">
-            
-            <div class="card-title"><a href="lessons.html">{{ cour.titreCours }}</a></div>
-            <div class="card-text">{{ cour.descriptionCours }}</div>
-        </div>
-        
-        <div class="price_box d-flex flex-row align-items-center">
-            <div class="course_author_image">
-               
-                <img src="{% static 'images/author.jpg' %}" alt="Auteur">
-            </div>
-            <div class="course_author_name">Michael Smith, <span>Author</span></div>
-            <div class="course_price d-flex flex-column align-items-center justify-content-center">
-                <span>$29</span>
-            </div>
-        </div>
-    </div>
-</div>
-{% endfor %}
-		</div>		
-	</div>
 
 	<!-- Register -->
 

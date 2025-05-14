@@ -1,9 +1,9 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from qcm.models import Qcm
-from question.models import Question
-from lesson.models import Lesson
 from progres.models import ProgresUtilisateur
+
+
 
 @login_required
 def afficher_qcm(request, qcm_id):
@@ -23,47 +23,41 @@ def soumettre_qcm(request, qcm_id):
         score = 0
 
         for question in questions:
-            bonnes_reps = set()
-            for rep in question.reponses.filter(natureRep=True):
-                bonnes_reps.add(str(rep.idReponse))
+            bonnes_reps = set(str(rep.idReponse) for rep in question.reponses.filter(natureRep=True))
             reps_cochees = set(request.POST.getlist(f'question_{question.idQuestion}'))
             if bonnes_reps == reps_cochees:
                 score += 1
 
         reussi = score >= qcm.scoreMax
-        
-        progres, created = ProgresUtilisateur.objects.get_or_create(
+
+        # Mise à jour ou création de la progression de l'utilisateur
+        progres, created = ProgresUtilisateur.objects.update_or_create(
             user=request.user,
             lesson=qcm.lesson,
             defaults={
                 'score': score,
-                'estCompleted': reussi,
-                'niveau': 1,  # Initialisation du niveau à 1 si c'est un nouveau progrès
+                # 'niveau' peut être modifié ici si nécessaire
             }
         )
 
-        # Si l'entrée de progression existe déjà, mettre à jour le score et le niveau
-        if not created:
-            progres.score = max(progres.score, score)
-            if reussi and not progres.estCompleted:
-                progres.estCompleted = True
-                progres.niveau += 1  # Incrémenter le niveau si le QCM est réussi
-            progres.save()
-
-        # Si l'utilisateur réussit le QCM, on récupère la leçon suivante
+        # Marquer la leçon comme terminée si le QCM est réussi
         if reussi:
-            prochaine_lecon = Lesson.objects.filter(idLesson__gt=qcm.lesson.idLesson).order_by('idLesson').first()
+            qcm.lesson.estTermine = True
+            qcm.lesson.save()
 
-            if prochaine_lecon:
-                ProgresUtilisateur.objects.get_or_create(
-                    user=request.user,
-                    lesson=prochaine_lecon,
-                    defaults={
-                        'niveau': progres.niveau,  # On garde le niveau actuel pour la leçon suivante
-                        'score': 0,
-                        'estCompleted': False,
-                    }
-                )
+            # Met à jour le niveau de l'utilisateur basé sur les leçons complétées
+            lecons_completees = ProgresUtilisateur.objects.filter(
+                user=request.user,
+                lesson__estTermine=True  # Assure-toi que les leçons terminées sont prises en compte
+            ).order_by('date_completed')
+
+            for index, progression in enumerate(lecons_completees, start=1):
+                progression.niveau = index
+                progression.save()
+
+            niveau = lecons_completees.count()
+        else:
+            niveau = progres.niveau if hasattr(progres, 'niveau') else 0
 
         return render(request, 'resultats.html', {
             'score': score,
@@ -71,5 +65,5 @@ def soumettre_qcm(request, qcm_id):
             'total_questions': questions.count(),
             'reussi': reussi,
             'lesson': qcm.lesson,
-            'niveau': progres.niveau  # Affichage du niveau dans le template
+            'niveau': niveau
         })

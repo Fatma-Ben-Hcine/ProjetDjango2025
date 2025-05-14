@@ -11,42 +11,9 @@
     <link href="{% static 'plugins/fontawesome-free-5.0.1/css/fontawesome-all.css' %}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" href="{% static 'styles/courses_styles.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'styles/courses_responsive.css' %}">
-    <style>
-        .chat-container {
-            height: 400px;
-            overflow-y: auto;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 15px;
-            margin-bottom: 20px;
-            background-color: #f9f9f9;
-        }
-        .user-message {
-            text-align: right;
-            color: #007bff;
-            margin-bottom: 10px;
-        }
-        .bot-message {
-            text-align: left;
-            color: #28a745;
-            margin-bottom: 10px;
-        }
-        .error-message {
-            text-align: left;
-            color: #dc3545;
-            margin-bottom: 10px;
-        }
-        #chat-form {
-            display: flex;
-            margin-bottom: 30px;
-        }
-        #user-message {
-            flex-grow: 1;
-            margin-right: 10px;
-        }
-    </style>
+  
 </head>
-<body>
+<body style="background-image:url({% static 'images/chatbot.png' %})">
 
 <div class="super_container">
 
@@ -66,12 +33,15 @@
                 <div class="main_nav">
                     <ul class="main_nav_list">
                         <li class="main_nav_item"><a href="{% url 'index' %}">home</a></li>
-                        <li class="main_nav_item"><a href="#">about us</a></li>
-                        <li class="main_nav_item"><a href="#">courses</a></li>
-                        <li class="main_nav_item"><a href="#">elements</a></li>
-                        <li class="main_nav_item"><a href="#">news</a></li>
-                        <li class="main_nav_item"><a href="#">contact</a></li>
-                        <li class="main_nav_item"><a href="{% url 'login' %}">login</a></li>
+                        <li class="main_nav_item"><a href="{% url 'cours:liste' %}">courses</a></li>
+                        <li class="main_nav_item"><a href="{% url 'chat' %}">Assistant</a></li>
+                        <li  class="main_nav_item">  
+							{% if user.is_authenticated %} 
+							<a class="page-scroll" href="{% url 'logout' %}">Logout</a> 
+							{% else %} 
+							<a class="page-scroll" href="{% url 'login' %}">Login</a> 
+							{% endif %}    
+							</li>
                     </ul>
                 </div>
             </nav>
@@ -124,39 +94,42 @@
     
     <!-- Home -->
     <div class="home">
-        <div class="home_background_container prlx_parent">
-            <div class="home_background prlx" style="background-image:url({% static 'images/courses_background.jpg' %})"></div>
-        </div>
+      
         <div class="home_content">
             <h1>Chatbot Assistant</h1>
         </div>
     </div>
 
-    <!-- Chatbot Section -->
-    <div class="popular page_section">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <div class="card shadow-sm mb-5">
-                        <div class="card-header text-center bg-danger text-white">
-                            <h2>Chat with our Assistant</h2>
+   <!-- Chatbot Section -->
+<div class="popular page_section" style="background-image: url('/static/images/chatbot-yellow.png'); background-size: cover;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card shadow-sm mb-5" style="background-color: rgba(255, 255, 255, 0.8);">
+                    <!-- En-tête jaune -->
+                    <div class="card-header text-center" style="background-color: #ffc107; color: #000;">
+                        <h2>Chat avec notre Assistant</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="chat-container mb-3" id="chat-log" style="height: 300px; overflow-y: auto; border: 1px solid #ffc107; border-radius: 5px; padding: 10px; background-color: rgba(255, 255, 255, 0.5);">
                         </div>
-                        <div class="card-body">
-                            <div class="chat-container" id="chat-log"></div>
-                            <form id="chat-form">
-                                <div class="input-group">
-                                    <input type="text" id="user-message" class="form-control" placeholder="Type your message here...">
-                                    <div class="input-group-append">
-                                        <button type="submit" class="btn btn-danger">Send</button>
-                                    </div>
+                        <form id="chat-form" style="background-color: transparent;">
+                            <div class="input-group">
+                                <input type="text" id="user-message" class="form-control" placeholder="Tapez votre message ici..." style="background-color: rgba(255,255,255,0.6); border: 1px solid #ccc;">
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn" style="background-color: #ffc107; color: #000;">Envoyer</button>
                                 </div>
-                            </form>
-                        </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
+
+</div>
+
 
     <!-- Footer -->
     <footer class="footer">

@@ -98,39 +98,41 @@
         </div>
     </div>
 
-    <!-- Login Section -->
-    <div class="popular page_section">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-6">
-                    <div class="card shadow-sm mb-5">
-                        <div class="card-header text-center bg-danger text-white">
-                            <h2>Connexion</h2>
-                        </div>
-                        <div class="card-body">
-                            <form method="post" class="needs-validation" novalidate>
-                                {% csrf_token %}
-                                <div class="mb-3">
-                                    <label for="id_username" class="form-label">Nom d'utilisateur</label>
-                                    <input type="text" name="username" class="form-control" id="id_username" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="id_password" class="form-label">Mot de passe</label>
-                                    <input type="password" name="password" class="form-control" id="id_password" required>
-                                </div>
-                                <div class="d-grid">
-                                    <button type="submit" class="btn btn-dark btn-block">Se connecter</button>
-                                </div>
-                            </form>
-                        </div>
+   <!-- Login Section -->
+<div class="popular page_section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="card shadow-sm mb-5">
+                    <!-- En-tête avec fond jaune foncé -->
+                    <div class="card-header text-center" style="background-color: #ffc107; color: #000;">
+                        <h2>Connexion</h2>
                     </div>
-                    <div class="text-center mt-3">
-                        <p>Pas encore de compte ? <a href="{% url 'register' %}" class="text-danger">Inscrivez-vous ici</a></p>
+                    <div class="card-body">
+                        <form method="post" class="needs-validation" novalidate>
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="id_username" class="form-label">Nom d'utilisateur</label>
+                                <input type="text" name="username" class="form-control" id="id_username" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="id_password" class="form-label">Mot de passe</label>
+                                <input type="password" name="password" class="form-control" id="id_password" required>
+                            </div>
+                            <div class="d-grid">
+                                <button type="submit" class="btn" style="background-color: #ffc107; color: #000;">Se connecter</button>
+                            </div>
+                        </form>
                     </div>
+                </div>
+                <div class="text-center mt-3">
+                    <p>Pas encore de compte ? <a href="{% url 'register' %}" style="color: #ffc107;">Inscrivez-vous ici</a></p>
                 </div>
             </div>
         </div>
     </div>
+</div>
+
 
     <!-- Footer -->
     <footer class="footer">

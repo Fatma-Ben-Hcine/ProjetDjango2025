@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title></title>
+    <title>Leçons - {{ cours.titreCours }}</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="Course Project">
@@ -10,7 +10,8 @@
     <link rel="stylesheet" type="text/css" href="{% static 'styles/bootstrap4/bootstrap.min.css' %}">
     <link href="{% static 'plugins/fontawesome-free-5.0.1/css/fontawesome-all.css' %}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" href="{% static 'styles/courses_styles.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'styles/courses_responsive.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/cours.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/lesson.css' %}">
 </head>
 <body>
 
@@ -32,11 +33,15 @@
                 <div class="main_nav">
                     <ul class="main_nav_list">
                         <li class="main_nav_item"><a href="{% url 'index' %}">home</a></li>
-                        <li class="main_nav_item"><a href="#">about us</a></li>
-                        <li class="main_nav_item"><a href="#">courses</a></li>
-                        <li class="main_nav_item"><a href="#">elements</a></li>
-                        <li class="main_nav_item"><a href="#">news</a></li>
-                        <li class="main_nav_item"><a href="#">contact</a></li>
+                        <li class="main_nav_item"><a href="{% url 'cours:liste' %}">courses</a></li>
+                        <li class="main_nav_item"><a href="{% url 'chat' %}">Assistant</a></li>
+                        <li  class="main_nav_item">  
+							{% if user.is_authenticated %} 
+							<a class="page-scroll" href="{% url 'logout' %}">Logout</a> 
+							{% else %} 
+							<a class="page-scroll" href="{% url 'login' %}">Login</a> 
+							{% endif %}    
+							</li>
                     </ul>
                 </div>
             </nav>
@@ -77,7 +82,6 @@
                         {% endif %}    
                     </li>
                 </ul>
-                
 
                 <!-- Menu Social -->
                 <div class="menu_social_container menu_mm">
@@ -112,27 +116,40 @@
                     <div class="section_title text-center">
                         <h1>Cours: {{cours.titreCours}}</h1>
                     </div>
-                    {{cours.descriptionCours|linebreaks}}
+                    <div class="section_title text-center">
+                        <h2>Détails du cours</h2>
+                    </div>
+                    <div class="text-center">
+                        {{cours.descriptionCours|linebreaks}}
+                    </div>
                 </div>
             </div>
             
-           
             <div class="row course_boxes">
+                <div class="section_title text-center">
+                        <h1>Leçon disponibles:</h1>
+                    </div>
                 {% for lesson in lessons %}
                 <div class="col-lg-4 course_box">
                     <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ lesson.titrLesson }}</h5>
-                           
-                            <p>Niveau: {{ lesson.niveau }}</p>
-                            <p>Statut: {% if lesson.estTermine %}Terminé{% else %}En cours{% endif %}</p>
-                            <button><a href="{% url 'lesson:lessondet' lesson.idLesson %}">assister</a></button>
+                        <div class="card-body text-center">
+                            <h3 class="card-title">{{ lesson.titrLesson }}</h3>
+                            <div class="card-text">
+                                <p>Niveau: {{ lesson.niveau }}</p>
+                                <p>Statut: {% if lesson.estTermine %}Terminé{% else %}Inachevé{% endif %}</p>
+                            </div>
+                            <div class="button_container">
+                                <a href="{% url 'lesson:lessondet' lesson.idLesson %}" class="btn btn-primary">
+                                    <span>Assister</span>
+                                    <span class="button_arrow"><i class="fas fa-chevron-right"></i></span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
-               
                 {% endfor %}
-            </div>       
+            </div>
+        </div>
     </div>
 
     <!-- Footer -->
@@ -143,20 +160,14 @@
                 <div class="row">
                     <div class="col">
                         <div class="section_title text-center">
-                            <h1>Subscribe to newsletter</h1>
+                            <h1>Avez-vous des questions à poser</h1>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col text-center">
                         <div class="newsletter_form_container mx-auto">
-                            <form method="post">
-                                {% csrf_token %}
-                                <div class="newsletter_form d-flex flex-md-row flex-column flex-xs-column align-items-center justify-content-center">
-                                    <input type="email" name="email" class="newsletter_email" placeholder="Email Address" required>
-                                    <button type="submit" class="newsletter_submit_btn trans_300">Subscribe</button>
-                                </div>
-                            </form>
+                          <button type="submit" class="btn" style="background-color: #ffc107; color: #000;"><a style="color: #000;" href="{% url 'chat' %}">Assistant</a></button>
                         </div>
                     </div>
                 </div>

@@ -1,0 +1,177 @@
+/* Conteneur principal */
+.course_boxes {
+    margin: 2rem 0;
+    gap: 30px;
+    padding: 0 15px;
+}
+
+/* Titre section - Jaune doré */
+.section_title h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 3rem;
+    color: #5a4a1f; /* Brun-jaune profond */
+    position: relative;
+    display: inline-block;
+}
+
+.section_title h1::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: #FFD700; /* Jaune doré */
+    border-radius: 2px;
+}
+
+/* Carte de leçon - Thème jaune */
+.course_box {
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    margin-bottom: 30px;
+}
+
+.card {
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 15px rgba(255, 215, 0, 0.1); /* Ombre jaune subtile */
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+    height: 100%;
+    background: linear-gradient(135deg, #FFF9E6 0%, #FFF3CC 100%); /* Dégradé jaune pâle */
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 25px rgba(255, 215, 0, 0.15);
+}
+
+.card-body {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* Titre de la leçon */
+.card-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: #5a4a1f; /* Brun-jaune */
+    position: relative;
+    padding-bottom: 15px;
+}
+
+.card-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 3px;
+    background: #FFC107; /* Jaune vif */
+}
+
+/* Texte de la carte */
+.card-text p {
+    margin-bottom: 0.8rem;
+    font-size: 1rem;
+    color: #665a30; /* Jaune-brun clair */
+}
+
+.card-text p:first-child {
+    font-weight: 500;
+    color: #FFA000; /* Jaune ambré */
+}
+
+/* Bouton - Jaune doré */
+.button_container {
+    margin-top: auto;
+    padding-top: 1.5rem;
+}
+
+.btn-primary {
+    background-color: #FFC107; /* Jaune vif */
+    border: none;
+    border-radius: 8px;
+    padding: 10px 24px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    color: #5a4a1f; /* Texte foncé pour contraste */
+}
+
+.btn-primary span {
+    position: relative;
+    z-index: 2;
+}
+
+.btn-primary .button_arrow {
+    transition: transform 0.3s ease;
+    color: #5a4a1f;
+}
+
+.btn-primary:hover {
+    background-color: #FFA000; /* Jaune plus foncé */
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 193, 7, 0.3);
+    color: white;
+}
+
+.btn-primary:hover .button_arrow {
+    transform: translateX(4px);
+    color: white;
+}
+
+/* Badge de statut */
+.card-text p:last-child {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    background-color: #FFD700; /* Jaune doré */
+    color: #5a4a1f; /* Texte foncé */
+}
+
+/* Statuts spécifiques */
+.card-text p.termine {
+    background-color: #FFD700; /* Jaune doré */
+}
+
+.card-text p.inacheve {
+    background-color: #FFA000; /* Jaune ambré */
+    color: white;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .course_box {
+        margin-bottom: 25px;
+    }
+    
+    .card-body {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .section_title h1 {
+        font-size: 2rem;
+    }
+    
+    .col-lg-4 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
